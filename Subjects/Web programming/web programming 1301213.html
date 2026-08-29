@@ -7,17 +7,17 @@
         <title>منصة الموارد الطلابية  | تطوير برمجيات الانترنت</title>
         <style>
             .transparent-bg-container {
-            /* Establishes a positioning context for the background layer */
+            
             position: relative; 
             padding: 40px;
             color: #333333;
-            /* Forces child content to stack properly over the pseudo-element */
+            
             isolation: isolate; 
             }
 
             .transparent-bg-container::before {
             content: "";
-            /* Stretches the background layer to fill the exact size of the container */
+            
             position: absolute;
             top: 0;
             left: 0;
@@ -28,7 +28,7 @@
             background-position: center;
             background-repeat: no-repeat;
             opacity: 0.3; 
-            /* Pushes the image layer visually behind your text */
+            
             z-index: -1; 
             }
 
