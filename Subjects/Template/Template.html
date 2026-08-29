@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ar"  dir = "rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة الموارد الطلابية  | مادة تجريبية</title>  
+    <link rel="stylesheet" href="../../styles.css">     
+     <style>
+            .transparent-bg-container {
+            /* Establishes a positioning context for the background layer */
+            position: relative; 
+            padding: 40px;
+            color: #333333;
+            /* Forces child content to stack properly over the pseudo-element */
+            isolation: isolate; 
+            }
+
+            .transparent-bg-container::before {
+            content: "";
+            /* Stretches the background layer to fill the exact size of the container */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            
+            background-image: url(../../images/FIT\ logo.png);
+            background-size: auto;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.3; 
+            /* Pushes the image layer visually behind your text */
+            z-index: -1; 
+            }
+
+            summary {
+            font-size: 1.5em; 
+            font-weight: bold; 
+            cursor: pointer; 
+            text-align: right;
+            padding: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            background-color: #f5f5f5;
+            outline: none;
+            
+            }
+            details{
+                margin-right: 20px; 
+                border: 2px solid #333333;
+                border-radius: 6px;
+                margin: 15px 0;
+                background-color: #ffffff;
+                overflow: hidden;
+            }
+            detail ul li{
+                list-style: circle;
+                margin-right: 50px;
+                font-size: 40px;
+            }
+            
+        </style>
+</head>
+<body> 
+     <nav>
+    <div class="nav-inner">
+        <div class="nav-logo">
+            <img src="../../images/logo.jpg" alt="Logo" style="height: 54px; border-radius: 8px;">
+            <div>
+                <span>منصة الموارد والتبادل الطلابي<br><span class="logo-sub">جامعة العلوم التطبيقية الخاصة</span></span>
+            </div>
+        </div>
+        <ul class="nav-links">
+        <li><a href="../../index.html">الرئيسية</a></li>
+        <li><a href="../../about.html">من نحن</a></li>
+        <li class="dropdown">
+            <button type="button" class="dropdown-toggle">مركز المصادر</button>
+            <ul class="dropdown-menu">
+            <li><a href="../../curriculum.html">الخطة الشجرية لعلم الحاسوب</a></li>
+            <li><a href="../../Resource.html">الموارد البرمجية </a></li>
+        </ul>
+    </li>
+    <li><a href="../../book.html">بيع وشراء الكتب</a></li>
+    <li><a href="../../gpa-calculator.html" >حساب المعدل</a></li>
+    <li><a href="../../contact.html">اتصل بنا</a></li>
+</ul>
+    </div>
+</nav>
+
+<div class="transparent-bg-container">
+    <h1 style="text-align: center;">Web-Based Programming || تطوير برمجيات الانترنت</h1>
+    <div>
+        <details>
+        <summary>وصف المادة</summary>
+        <ul>
+            <li><a href="Web-Based Programming Syllabus (Practical).docx" target="_blank">تحميل وصف المادة</a></li>
+        </ul>
+        </details>
+    </div>
+    <div>
+        <details>
+        <summary>الكتب و السلايدات</summary>
+        <ul>
+            <li><a href="Books and Slides/Web Ch. 1 [Introduction].pdf" target="_blank">Web Ch. 1 [Introduction]</a></li>
+            <li><a href="Books and Slides/Web Ch. 2 [HTML] Part 1.pdf" target="_blank">Web Ch. 2 [HTML] Part 1</a></li>
+            <li><a href="Books and Slides/Web Ch. 2 [HTML] Part 2.pdf" target="_blank">Web Ch. 2 [HTML] Part 2</a></li>
+        </ul>
+        </details>
+    </div>
+    
+   <div>
+        <details>
+        <summary>أسئلة سنوات</summary>
+        <ul>
+            <li><a href="Past exams/Web - Final - 20251.pdf" target="_blank">Web - Final - 20251</a></li>
+            <li><a href="Past exams/Web - Final - 20252.pdf" target="_blank">Web - Final - 20252</a></li>
+        </ul>
+        </details>
+    </div>
+    
+    <div>
+        <details>
+        <summary>دفاتر وملخصات</summary>
+        <ul>
+            <li><a href="Summary/Web Summary.pdf" target="_blank">الاختيار رقم 1</a></li>
+            <li><a href="Summary/Summary2.pdf" target="_blank">الاختيار رقم 1</a></li>
+        </ul>
+        </details>
+    </div>
+</div> 
+    <footer>
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <strong>منصة الموارد والتبادل الطلابي</strong>
+            <p>منصة طلابية غير رسمية مخصصة لطلاب جامعة العلوم التطبيقية الخاصة (ASU) لتبادل المعرفة والموارد الأكاديمية وتسهيل الحياة الجامعية.</p>
+        </div>
+        <div class="footer-col">
+            <h4>روابط سريعة</h4>
+            <ul>
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="about.html">من نحن</a></li>
+                <li><a href="Resource.html">الموارد البرمجية</a></li>
+                <li><a href="book.html">بيع وشراء الكتب</a></li>
+                <li><a href="gpa-calculator.html">حساب المعدل</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>روابط مهمة</h4>
+            <ul>
+            
+                <li><a href="https://asu.edu.jo/en/Pages/default.aspx">موقع الجامعة الرسمي </a></li>
+                <li><a href="https://edugate.asu.edu.jo">EduGate</a></li>
+                <li><a href="https://my.asu.edu.jo">MyASU</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 منصة الموارد والتبادل الطلابي.</p>
+    </div>
+</footer>
+</body>
+</html>

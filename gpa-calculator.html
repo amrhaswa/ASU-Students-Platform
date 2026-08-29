@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حساب المعدل - منصة الموارد والتبادل الطلابي</title>
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        .calculator-wrapper {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 8px 40px rgba(67, 50, 112, 0.14);
+            overflow: hidden;
+            border: 1px solid #f0eaf8;
+        }
+
+        .calculator-header {
+            background: linear-gradient(135deg, #433270, #6853a8);
+            padding: 30px 36px;
+            color: white;
+        }
+
+        .calculator-header h2 {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .calculator-header p {
+            opacity: 0.85;
+            font-size: 14px;
+        }
+
+        .calculator-body {
+            padding: 32px 36px;
+        }
+
+        .course-row {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr 40px;
+            gap: 12px;
+            align-items: end;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #f6f4fa;
+        }
+
+        .course-row:last-of-type {
+            border-bottom: none;
+        }
+
+        .course-row label {
+            font-size: 13px;
+            color: #7b6ba5;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .course-row input,
+        .course-row select {
+            padding: 10px 14px;
+            border: 2px solid #dcd4f0;
+            border-radius: 9px;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 14px;
+            color: #2a2438;
+            background: #f8fafd;
+            outline: none;
+            width: 100%;
+            transition: border-color 0.2s;
+        }
+
+        .course-row input:focus,
+        .course-row select:focus {
+            border-color: #6853a8;
+            background: #fff;
+        }
+
+        .remove-btn {
+            background: #fee2e2;
+            color: #dc2626;
+            border: none;
+            border-radius: 8px;
+            width: 36px;
+            height: 36px;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .remove-btn:hover {
+            background: #fca5a5;
+        }
+
+        .calc-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #433270, #6853a8);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s;
+            margin-top: 10px;
+        }
+
+        .calc-btn:hover {
+            background: linear-gradient(135deg, #2c204d, #524189);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(67, 50, 112, 0.35);
+        }
+
+        .result-box {
+            background: linear-gradient(135deg, #f6f4fa, #f0eaf8);
+            border-radius: 14px;
+            padding: 28px;
+            text-align: center;
+            border: 2px solid #dcd4f0;
+        }
+
+        .result-gpa {
+            font-size: 64px;
+            font-weight: 800;
+            color: #433270;
+            line-height: 1;
+            margin: 10px 0;
+        }
+
+        .result-label {
+            color: #5c4d8c;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .grade-scale-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .grade-scale-table th {
+            background: #433270;
+            color: white;
+            padding: 10px 14px;
+            text-align: right;
+            font-weight: 700;
+        }
+
+        .grade-scale-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #f0eaf8;
+            color: #2a2438;
+        }
+
+        .grade-scale-table tr:nth-child(even) td {
+            background: #f8fafd;
+        }
+
+        .grade-scale-table tr:hover td {
+            background: #f6f4fa;
+        }
+
+        .calculator-layout {
+            display: grid;
+            grid-template-columns: 1.8fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        /* Hamburger nav overrides */
+        .navbar-toggler {
+            border-color: #433270;
+        }
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23433270' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        @media (max-width: 768px) {
+            .calculator-layout {
+                grid-template-columns: 1fr;
+            }
+            .course-row {
+                grid-template-columns: 80px 1fr 36px;
+                gap: 8px;
+                align-items: center;
+            }
+            .calculator-body, .calculator-header {
+                padding: 16px;
+            }
+            .result-gpa {
+                font-size: 48px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .course-row {
+                grid-template-columns: 72px 1fr 34px;
+                gap: 6px;
+                padding-bottom: 12px;
+            }
+            .remove-btn {
+                width: 34px;
+                height: 34px;
+                font-size: 16px;
+                position: static;
+            }
+            .course-row-header {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+
+<nav class="navbar navbar-expand-lg" style="background:#ffffff; border-bottom:2px solid #e6e2f4; box-shadow:0 2px 12px rgba(67,50,112,0.1); position:sticky; top:0; z-index:1000;">
+    <div class="container-fluid" style="max-width:1100px; margin:0 auto; padding:0 24px;">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+            <img src="images/logo.jpg" alt="Logo" style="height:48px; border-radius:8px;">
+            <div>
+                <span style="font-size:18px; font-weight:800; color:#433270; display:block; line-height:1.2;">منصة الموارد والتبادل الطلابي</span>
+                <span style="font-size:12px; color:#7b6ba5;">جامعة العلوم التطبيقية الخاصة</span>
+            </div>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation" style="border-color:#433270;">
+            <span class="navbar-toggler-icon" style="background-image:url(&quot;data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23433270' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e&quot;);"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="gap:4px;">
+                <li class="nav-item"><a class="nav-link" style="color:#5c4d8c; border-radius:8px; font-weight:500;" href="index.html">الرئيسية</a></li>
+                <li class="nav-item"><a class="nav-link" style="color:#5c4d8c; border-radius:8px; font-weight:500;" href="about.html">من نحن</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" style="color:#5c4d8c; border-radius:8px; font-weight:500;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">مركز المصادر</a>
+                    <ul class="dropdown-menu dropdown-menu-end" style="border:1px solid #e6e2f4; border-radius:10px; box-shadow:0 8px 20px rgba(67,50,112,0.15);">
+                        <li><a class="dropdown-item" style="color:#5c4d8c;" href="curriculum.html">الخطة الشجرية لعلم الحاسوب</a></li>
+                        <li><a class="dropdown-item" style="color:#5c4d8c;" href="Resource.html">الموارد البرمجية</a></li>
+                    </ul>
+                </li>                <li class="nav-item"><a class="nav-link" style="color:#5c4d8c; border-radius:8px; font-weight:500;" href="services.html">بيع وشراء الكتب</a></li>
+                <li class="nav-item"><a class="nav-link" style="background:#433270; color:#fff; border-radius:8px; font-weight:500;" href="gpa-calculator.html">حساب المعدل</a></li>
+                <li class="nav-item"><a class="nav-link" style="color:#5c4d8c; border-radius:8px; font-weight:500;" href="contact.html">اتصل بنا</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="page-header" style="background-image: url('images/gpa-header.jpg.jpg'); background-size: cover; background-position: center; position: relative;">
+    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(67, 50, 112, 0.6); z-index: 1;"></div>
+    <div style="position: relative; z-index: 2;">
+        <h1 style="text-shadow: 0 2px 4px rgba(0,0,0,0.3);">حساب المعدل</h1>
+        <p style="text-shadow: 0 1px 3px rgba(0,0,0,0.3);">حساب المعدل المئوي لطلاب جامعة العلوم التطبيقية الخاصة</p>
+    </div>
+</div>
+
+<section>
+    <div class="container">
+        <div class="calculator-layout">
+            <div class="calculator-wrapper">
+                <div class="calculator-header">
+                    <h2> حساب المعدل الفصلي والتراكمي</h2>
+                    <p>أدخل عدد الساعات لكل مادة وعلامتك المتوقعة (من 100%)</p>
+                </div>
+                <div class="calculator-body">
+                    <details style="margin-bottom: 24px;">
+                        <summary class="btn btn-outline" style="cursor: pointer; font-size: 14px; padding: 12px; display: block; text-align: center; font-family: 'Tajawal', sans-serif; list-style: none;">
+                            + إضافة المعدل التراكمي السابق (اختياري)
+                        </summary>
+                        <div style="background: #f8fafd; border: 2px solid #dcd4f0; border-radius: 12px; padding: 18px; margin-top: 12px;">
+                            <h4 style="color: #433270; font-size: 14px; margin-bottom: 14px;">معلومات السجل الأكاديمي السابق</h4>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                                <div>
+                                    <label style="font-size: 13px; color: #7b6ba5; font-weight: 600; display: block; margin-bottom: 6px;">المعدل السابق (%)</label>
+                                    <input id="prev-gpa" type="number" placeholder="مثال: 85.4" min="0" max="100" style="width: 100%; padding: 10px 14px; border: 2px solid #dcd4f0; border-radius: 9px; font-family: 'Tajawal'; font-size: 14px; color: #2a2438; background: #fff; outline: none; transition: border-color 0.2s;">
+                                </div>
+                                <div>
+                                    <label style="font-size: 13px; color: #7b6ba5; font-weight: 600; display: block; margin-bottom: 6px;">إجمالي الساعات السابقة</label>
+                                    <input id="prev-hours" type="number" placeholder="مثال: 60" min="0" style="width: 100%; padding: 10px 14px; border: 2px solid #dcd4f0; border-radius: 9px; font-family: 'Tajawal'; font-size: 14px; color: #2a2438; background: #fff; outline: none; transition: border-color 0.2s;">
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <h3 style="color: #2c204d; font-size: 16px; margin-bottom: 14px;">مواد الفصل الحالي</h3>
+                    <div class="course-row-header" style="display: grid; grid-template-columns: 1fr 1.5fr 40px; gap: 12px; margin-bottom: 10px;">
+                        <div style="font-size: 13px; font-weight: 700; color: #7b6ba5;">الساعات</div>
+                        <div style="font-size: 13px; font-weight: 700; color: #7b6ba5;">الدرجة (%)</div>
+                        <div></div>
+                    </div>
+
+                    
+                    <div id="courses-container">
+
+                        <div class="course-row">
+                            <div>
+                                <select>
+                                    <option value="3">3</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="4">4</option>
+                                </select>
+                            </div>
+                            <div>
+                                <input type="number" placeholder="مثال: 95" min="0" max="100">
+                            </div>
+                            <button class="remove-btn" type="button">&times;</button>
+                        </div>
+
+                        <div class="course-row">
+                            <div>
+                                <select>
+                                    <option value="3">3</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="4">4</option>
+                                </select>
+                            </div>
+                            <div>
+                                <input type="number" placeholder="مثال: 82" min="0" max="100">
+                            </div>
+                            <button class="remove-btn" type="button">&times;</button>
+                        </div>
+
+                        <div class="course-row">
+                            <div>
+                                <select>
+                                    <option value="3">3</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="4">4</option>
+                                </select>
+                            </div>
+                            <div>
+                                <input type="number" placeholder="مثال: 78" min="0" max="100">
+                            </div>
+                            <button class="remove-btn" type="button">&times;</button>
+                        </div>
+
+                        <div class="course-row">
+                            <div>
+                                <select>
+                                    <option value="2">2</option>
+                                    <option value="1">1</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
+                            </div>
+                            <div>
+                                <input type="number" placeholder="مثال: 90" min="0" max="100">
+                            </div>
+                            <button class="remove-btn" type="button">&times;</button>
+                        </div>
+
+                        <div class="course-row">
+                            <div>
+                                <select>
+                                    <option value="3">3</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="4">4</option>
+                                </select>
+                            </div>
+                            <div>
+                                <input type="number" placeholder="مثال: 72" min="0" max="100">
+                            </div>
+                            <button class="remove-btn" type="button">&times;</button>
+                        </div>
+
+                    </div>
+                    
+
+                    <div style="margin: 8px 0 24px;">
+                        <button id="add-course-btn" type="button" class="btn btn-outline" style="font-size: 14px; padding: 9px 20px;">
+                            + إضافة مادة جديدة
+                        </button>
+                    </div>
+
+                    
+                    <div style="background: #f6f4fa; border-radius: 12px; padding: 18px; margin-bottom: 24px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; text-align: center;">
+                        <div>
+                            <div style="font-size: 11px; color: #7b6ba5; font-weight: 700; margin-bottom: 4px;">إجمالي الساعات</div>
+                            <div id="preview-hours" style="font-size: 22px; font-weight: 800; color: #433270;">14</div>
+                        </div>
+                        <div style="border-right: 1px solid #dcd4f0; border-left: 1px solid #dcd4f0;">
+                            <div style="font-size: 11px; color: #7b6ba5; font-weight: 700; margin-bottom: 4px;">عدد المواد</div>
+                            <div id="preview-count" style="font-size: 22px; font-weight: 800; color: #433270;">5</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 11px; color: #7b6ba5; font-weight: 700; margin-bottom: 4px;">المعدل المتوقع</div>
+                            <div id="preview-gpa" style="font-size: 22px; font-weight: 800; color: #433270;">—</div>
+                        </div>
+                    </div>
+
+                    <button id="calc-btn" type="button" class="calc-btn">احسب المعدل</button>
+                </div>
+            </div>
+
+            
+            <div style="display: flex; flex-direction: column; gap: 22px;">
+                <div class="result-box">
+                    <div class="result-label">المعدل الفصلي</div>
+                    <div id="result-semester-gpa" class="result-gpa">—</div>
+                    <div id="result-grade" style="font-size: 18px; font-weight: 700; padding: 8px 20px; border-radius: 20px; display: inline-block; margin-top: 8px;">أدخل درجاتك</div>
+
+                    
+                    <div id="cumulative-row" style="display:none; margin-top:16px; padding-top:16px; border-top:1px solid #dcd4f0;">
+                        <div class="result-label" style="font-size:14px;">المعدل التراكمي</div>
+                        <div id="result-cumulative-gpa" style="font-size:36px; font-weight:800; color:#433270; line-height:1; margin-top:6px;">—</div>
+                    </div>
+                </div>
+
+                <div class="card" style="padding: 22px;">
+                    <h4 style="color: #2c204d; font-size: 16px; font-weight: 800; margin-bottom: 16px;"> تصنيف المعدلات - نظام ASU</h4>
+                    <table class="grade-scale-table">
+                        <thead>
+                            <tr>
+                                <th>الفصلية والتراكمية</th>
+                                <th>التقدير</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td dir="ltr" style="text-align: right;">92% - 100%</td>
+                                <td style="color: #065f46; font-weight: 700;">ممتاز مع مرتبة شرف</td>
+                            </tr>
+                            <tr>
+                                <td dir="ltr" style="text-align: right;">84% - 91.9%</td>
+                                <td style="color: #065f46; font-weight: 700;">ممتاز</td>
+                            </tr>
+                            <tr>
+                                <td dir="ltr" style="text-align: right;">76% - 83.9%</td>
+                                <td style="color: #1e40af; font-weight: 700;">جيد جدا</td>
+                            </tr>
+                            <tr>
+                                <td dir="ltr" style="text-align: right;">68% - 75.9%</td>
+                                <td style="color: #92400e; font-weight: 700;">جيد</td>
+                            </tr>
+                            <tr>
+                                <td dir="ltr" style="text-align: right;">أقل من 68%</td>
+                                <td style="color: #b45309; font-weight: 700;">مقبول</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card" style="background: linear-gradient(135deg, #f6f4fa, #fff); padding: 20px;">
+                    <h4 style="color: #2c204d; font-size: 15px; font-weight: 800; margin-bottom: 12px;">💡 نصائح لتحسين معدلك</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="color: #5c4d8c; font-size: 14px; padding: 6px 0; border-bottom: 1px solid #f0eaf8;">✅ ركّز على المواد ذات الساعات العالية</li>
+                        <li style="color: #5c4d8c; font-size: 14px; padding: 6px 0; border-bottom: 1px solid #f0eaf8;">✅ استخدم الامتحانات السابقة من مركز المصادر</li>
+                        <li style="color: #5c4d8c; font-size: 14px; padding: 6px 0; border-bottom: 1px solid #f0eaf8;">✅ شارك في مجموعات الدراسة</li>
+                        <li style="color: #5c4d8c; font-size: 14px; padding: 6px 0;">✅ تواصل مع أساتذتك بانتظام</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <strong>منصة الموارد والتبادل الطلابي</strong>
+            <p>منصة طلابية غير رسمية مخصصة لطلاب جامعة العلوم التطبيقية الخاصة (ASU) لتبادل المعرفة والموارد الأكاديمية وتسهيل الحياة الجامعية.</p>
+        </div>
+        <div class="footer-col">
+            <h4>روابط سريعة</h4>
+            <ul>
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="about.html">من نحن</a></li>
+                <li><a href="Resource.html">الموارد البرمجية</a></li>
+                <li><a href="services.html">بيع وشراء الكتب</a></li>
+                <li><a href="gpa-calculator.html" class="active">حساب المعدل</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>روابط مهمة</h4>
+            <ul>
+                <li><a href="https://asu.edu.jo/en/Pages/default.aspx">موقع الجامعة الرسمي</a></li>
+                <li><a href="https://edugate.asu.edu.jo">EduGate</a></li>
+                <li><a href="https://my.asu.edu.jo">MyASU</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 منصة الموارد والتبادل الطلابي.</p>
+    </div>
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="gpa-calculator.js"></script>
+
+</body>
+</html>
